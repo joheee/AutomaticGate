@@ -28,16 +28,21 @@ Servo myservo;
 void setup() {
    pinMode(PIN_TRIGGER, OUTPUT);
    pinMode(PIN_ECHO, INPUT);
-   Serial.begin(115200);
+   Serial.begin(9600);
    myservo.attach(PIN_SERVO);
 }
 
 void loop(){
    int cm = getDistance();
-   bool isOpen = isGateOpened(myservo, cm, 2000);
+   // bool isOpen = isGateOpened(myservo, cm, 2000);
 
    Serial.print("Jarak (cm) : ");
    Serial.println(cm);
    Serial.print("Gate Kebuka : ");
-   Serial.println(isOpen);
+   // Serial.println(isOpen);
+
+   myservo.write(180);
+   delay(1000);
+   myservo.write(0);
+   delay(1000);
 } 
