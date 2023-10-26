@@ -14,8 +14,10 @@ void setup() {
 
 void loop(){
    int cm = getDistance();
-   gateController(myservo, cm, 2000);
+   bool isOpen = isGateOpened(myservo, cm, 2000);
 
    Serial.print("Jarak (cm) : ");
    Serial.println(cm);
+   Serial.print("Gate Kebuka : ");
+   Serial.println(isOpen);
 } 
