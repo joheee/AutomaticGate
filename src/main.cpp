@@ -1,38 +1,29 @@
 #include <Arduino.h>
 #include <config/config.h>
 #include <Servo.h>
+#include <controller/firebase_setup.h>
+#include <controller/wifi_setup.h>
 #include <controller/distance.h>
 #include <controller/gate.h>
 #include <Firebase.h>
-#include "addons/TokenHelper.h"
-#include "addons/RTDBHelper.h"
-#include <ESP8266WiFi.h>
 
+Servo myservo;
 FirebaseData fbdo;
 FirebaseAuth auth;
 FirebaseConfig config;
-Servo myservo;
 
 void setup() {
-   //  initialize pin
+   // initialize pin
    pinMode(PIN_TRIGGER, OUTPUT);
    pinMode(PIN_ECHO, INPUT);
    myservo.attach(PIN_SERVO);
    Serial.begin(74880);
 
-   // connect wifi
-   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-   Serial.print("Connecting to Wi-Fi");
-   while (WiFi.status() != WL_CONNECTED){
-      Serial.print(".");
-      delay(300);
-   }
-   Serial.println();
-   Serial.print("Connected with IP: ");
-   Serial.println(WiFi.localIP());
-   Serial.println();
+   // initialize wifi
+   wifiSetupInit();
 
    // assign firebase cred
+   // firebaseSetupInit(fbdo, auth, config);
    config.api_key = API_KEY;
    config.database_url = DATABASE_URL;
    auth.user.email = USER_EMAIL;
