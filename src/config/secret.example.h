@@ -1,0 +1,6 @@
+#define SECRET_WIFI_SSID ""
+#define SECRET_WIFI_PASSWORD ""
+#define SECRET_API_KEY ""
+#define SECRET_DATABASE_URL ""
+#define USER_EMAIL ""
+#define USER_PASSWORD "" 
