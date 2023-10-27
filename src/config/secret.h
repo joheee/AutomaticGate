@@ -1,0 +1,6 @@
+#define SECRET_WIFI_SSID "wifi umum"
+#define SECRET_WIFI_PASSWORD "satuperxdx"
+#define SECRET_API_KEY "AIzaSyC9Bj7_ssyKHV2kQmxtAHc5aBKlEWp9Uac"
+#define SECRET_DATABASE_URL "https://automaticgate-71700-default-rtdb.firebaseio.com"
+#define USER_EMAIL "user@gmail.com"
+#define USER_PASSWORD "user123"
