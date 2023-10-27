@@ -23,7 +23,7 @@ void setup() {
    wifiSetupInit();
 
    // assign firebase cred
-   // firebaseSetupInit(fbdo, auth, config);
+   firebaseSetupInit(fbdo, auth, config);
    config.api_key = API_KEY;
    config.database_url = DATABASE_URL;
    auth.user.email = USER_EMAIL;
@@ -50,7 +50,7 @@ void loop(){
    }
 
    int cm = getDistance();
-   bool isOpen = isGateOpened(myservo, cm, 2000);
+   bool isOpen = isGateOpened(myservo, cm, 500,1000);
 
    Serial.print("Firebase Status : ");
    Serial.println(Firebase.ready());

@@ -3,7 +3,7 @@
 // Essential pin for module
 #define PIN_TRIGGER D3
 #define PIN_ECHO D2
-#define PIN_SERVO D1
+#define PIN_SERVO D4
 
 // Insert your network credentials
 #define WIFI_SSID SECRET_WIFI_SSID
