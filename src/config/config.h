@@ -1,4 +1,3 @@
-
-#define PIN_TRIGGER 9
-#define PIN_ECHO 8
-#define PIN_SERVO 4
+#define PIN_TRIGGER D3
+#define PIN_ECHO D2
+#define PIN_SERVO D1
