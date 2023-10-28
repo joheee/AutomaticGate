@@ -2,10 +2,12 @@
 #include <config/config.h>
 #include <Servo.h>
 #include <controller/firebase_setup.h>
+#include <controller/time_format.h>
 #include <controller/wifi_setup.h>
 #include <controller/distance.h>
 #include <controller/gate.h>
 #include <Firebase.h>
+#include <chrono>
 
 Servo myservo;
 FirebaseData fbdo;
@@ -23,39 +25,25 @@ void setup() {
    wifiSetupInit();
 
    // assign firebase cred
-   firebaseSetupInit(fbdo, auth, config);
-   config.api_key = API_KEY;
-   config.database_url = DATABASE_URL;
-   auth.user.email = USER_EMAIL;
-   auth.user.password = USER_PASSWORD;
-   config.token_status_callback = tokenStatusCallback;
-   Firebase.begin(&config, &auth);
-   Firebase.reconnectWiFi(true);
+   firebaseSetupInit(&fbdo, &auth, &config);
 }
-
-int count = 0;
 
 void loop(){
    if (Firebase.ready()){
-      if (Firebase.RTDB.setInt(&fbdo, "test/int", count)){
-         Serial.println("PASSED");
-         Serial.println("PATH: " + fbdo.dataPath());
-         Serial.println("TYPE: " + fbdo.dataType());
+      int cm = getDistance();
+      bool isOpen = isGateOpened(myservo, cm, 500,1000);
+      int64_t timestamp = getCurrentWIBTimestamp();
+      
+      Serial.print("Jarak (cm) : ");
+      Serial.println(cm);
+      Serial.print("Gate Kebuka : ");
+      Serial.println(isOpen);
+      Serial.print("header : ");
+      Serial.println(timestamp);
+
+      if (  Firebase.RTDB.setInt(&fbdo, std::to_string(timestamp) + "/distance", cm) && 
+            Firebase.RTDB.setBool(&fbdo, std::to_string(timestamp) + "/opened", isOpen ? true : false)){
+         Serial.println("success push data");
       }
-      else {
-         Serial.println("FAILED");
-         Serial.println("REASON: " + fbdo.errorReason());
-      }
-      count++;
    }
-
-   int cm = getDistance();
-   bool isOpen = isGateOpened(myservo, cm, 500,1000);
-
-   Serial.print("Firebase Status : ");
-   Serial.println(Firebase.ready());
-   Serial.print("Jarak (cm) : ");
-   Serial.println(cm);
-   Serial.print("Gate Kebuka : ");
-   Serial.println(isOpen);
-} 
+}
