@@ -1,12 +1,12 @@
-#include <Arduino.h>
-#include <config/config.h>
-#include <Servo.h>
 #include <controller/firebase_setup.h>
 #include <controller/time_format.h>
 #include <controller/wifi_setup.h>
 #include <controller/distance.h>
 #include <controller/gate.h>
+#include <config/config.h>
 #include <Firebase.h>
+#include <Arduino.h>
+#include <Servo.h>
 #include <chrono>
 
 Servo myservo;
